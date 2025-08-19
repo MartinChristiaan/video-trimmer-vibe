@@ -107,11 +107,11 @@ confirmTrimBtn.onclick = async function() {
         } else {
             alert('Error saving trim!');
         }
-        // Reset view
-        trimmingView.style.display = 'none';
-        videoSelection.style.display = '';
+        // Stay on trimming view and reset trim selection
         trimStart = null;
         trimEnd = null;
+        confirmTrimBtn.style.display = 'none';
+        renderPreviewScroll();
     }
 };
 
