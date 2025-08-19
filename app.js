@@ -13,6 +13,8 @@ let selectedVideo = null;
 let trimStart = null;
 let trimEnd = null;
 let videos = [];
+let existingTrims = [];
+let existingTrimFrames = new Set();
 
 async function fetchVideos() {
     const res = await fetch('/videos');
@@ -42,7 +44,27 @@ function renderVideoSelection() {
     });
 }
 
-function openTrimmingView(idx) {
+async function fetchClips(videoFile) {
+    const res = await fetch(`/clips/${videoFile}`);
+    return await res.json();
+}
+
+async function fetchExistingTrims(videoFile) {
+    const base = videoFile.split('.')[0];
+    try {
+        const res = await fetch(`/trims/${base}`);
+        if (res.ok) {
+            const text = await res.text();
+            return text.trim().split('\n').map(line => {
+                const [start, end, name] = line.split(',');
+                return {start: Number(start), end: Number(end), name};
+            });
+        }
+    } catch {}
+    return [];
+}
+
+async function openTrimmingView(idx) {
     selectedVideo = videos[idx];
     trimStart = null;
     trimEnd = null;
@@ -50,9 +72,37 @@ function openTrimmingView(idx) {
     trimmingView.style.display = '';
     videoTitle.textContent = selectedVideo.name;
     videoPlayer.src = `/video/${selectedVideo.file}`;
-    renderPreviewScroll();
     confirmTrimBtn.style.display = 'none';
     backBtn.style.display = '';
+    // Fetch and show clips
+    const clips = await fetchClips(selectedVideo.file);
+    renderClipsList(clips);
+    // Fetch trims and mark frames
+    existingTrims = await fetchExistingTrims(selectedVideo.file);
+    existingTrimFrames = new Set();
+    existingTrims.forEach(trim => {
+        for (let t = trim.start; t <= trim.end; t++) {
+            existingTrimFrames.add(t);
+        }
+    });
+    renderPreviewScroll();
+}
+
+function renderClipsList(clips) {
+    const clipsList = document.getElementById('clips-list');
+    clipsList.innerHTML = '';
+    clips.forEach(clip => {
+        const div = document.createElement('div');
+        div.className = 'clip-item';
+        const video = document.createElement('video');
+        video.src = `/clip/${clip}`;
+        video.controls = true;
+        div.appendChild(video);
+        const label = document.createElement('span');
+        label.textContent = clip;
+        div.appendChild(label);
+        clipsList.appendChild(div);
+    });
 }
 
 function renderPreviewScroll() {
@@ -62,6 +112,9 @@ function renderPreviewScroll() {
         img.src = p.src;
         img.className = 'preview-img';
         img.onclick = () => selectPreview(i);
+        if (existingTrimFrames.has(p.time)) {
+            img.classList.add('in-existing-trim');
+        }
         if (trimStart !== null && trimEnd !== null) {
             if (i >= trimStart && i <= trimEnd) {
                 img.classList.add('in-trim');

@@ -61,6 +61,19 @@ def get_preview(video, timestamp):
 def get_video(video):
     return send_from_directory(VIDEO_DIR, video)
 
+@app.route('/clips/<video>')
+def list_clips(video):
+    base = os.path.splitext(video)[0]
+    clips = []
+    for fname in os.listdir(CLIP_DIR):
+        if fname.startswith(f'{base}_clip_') and fname.endswith('.mp4'):
+            clips.append(fname)
+    return jsonify(clips)
+
+@app.route('/clip/<filename>')
+def get_clip(filename):
+    return send_from_directory(CLIP_DIR, filename)
+
 @app.route('/trim', methods=['POST'])
 def save_trim():
     data = request.json
@@ -95,6 +108,14 @@ def save_trim():
     except Exception as e:
         return jsonify({'error': f'ffmpeg failed: {e}'}), 500
     return jsonify({'status': 'ok', 'clip': output_file})
+
+@app.route('/trims/<base>')
+def get_trims(base):
+    trim_file = os.path.join(TRIM_DIR, f'{base}_trims.txt')
+    if not os.path.exists(trim_file):
+        return '', 404
+    with open(trim_file) as f:
+        return f.read(), 200, {'Content-Type': 'text/plain'}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -1,5 +1,4 @@
-
-Create a fast and user friendly app for trimming videos placed in a preconfigured raw directory. A (320x240) preview image extracted at every 10 seconds will be available to guide the trimming and video selection.
+create a html,js and css prototype for trimming videos. A (320x240) preview image extracted at every 10 seconds will be available to guide the trimming and video selection.
 
 When the user opens the site, he is greeted with the video selection view. This will be a flexbox containing rows, where each row is intended to show a preview of one of the videos in the folder. It shows up to 4 preview images taken at evenly spaced temporal positions from the video.
 
@@ -8,3 +7,5 @@ When the user clicks on the row, the vidoe trimming view will open. This view co
 Preview images for which the timestamp is not included in a trim, the opacity should be a bit lower.
 
 When the trim is confirmed, the video as well as the start and stop positions are stored in a text file by the server. A seperate file should be used for each videos to store clips/trims.
+
+For now, generate a frontend for this which is styled beautifully, with a blue green gradient in the background.
