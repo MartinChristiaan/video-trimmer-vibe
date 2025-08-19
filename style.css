@@ -21,6 +21,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 18px;
+    overflow-y: auto;
+    max-height: 80vh;
 }
 .video-row {
     display: flex;
@@ -70,6 +72,7 @@ body {
     overflow-x: auto;
     margin: 18px 0;
     padding-bottom: 8px;
+
 }
 #confirm-trim {
     display: block;
@@ -113,6 +116,8 @@ body {
     flex-wrap: wrap;
     gap: 16px;
     margin-top: 12px;
+    overflow-y: auto;
+    max-height: 80vh;
 }
 .clip-item {
     background: rgba(255,255,255,0.12);
