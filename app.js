@@ -9,6 +9,10 @@ const confirmTrimBtn = document.getElementById('confirm-trim');
 const backBtn = document.getElementById('back-btn');
 const videoTitle = document.getElementById('video-title');
 const trimNameInput = document.getElementById('trim-name');
+const clipsPage = document.getElementById('clips-page');
+const allClipsList = document.getElementById('all-clips-list');
+const goToClipsBtn = document.getElementById('go-to-clips');
+const backToHomeBtn = document.getElementById('back-to-home');
 
 // State
 let selectedVideo = null;
@@ -87,6 +91,35 @@ function renderClipsList(clips) {
     });
 }
 
+function renderAllClipsList(clips) {
+    allClipsList.innerHTML = '';
+    clips.forEach(clip => {
+        const div = document.createElement('div');
+        div.className = 'clip-item';
+        const label = document.createElement('span');
+        label.textContent = clip;
+        div.appendChild(label);
+        const playBtn = document.createElement('button');
+        playBtn.textContent = 'Play';
+        playBtn.style.margin = '8px 0';
+        playBtn.onclick = function() {
+            // Remove any existing video
+            const oldVideo = div.querySelector('video');
+            if (oldVideo) div.removeChild(oldVideo);
+            // Add video player
+            const video = document.createElement('video');
+            video.src = `/clip/${clip}`;
+            video.controls = true;
+            video.autoplay = true;
+            video.style.width = '180px';
+            video.style.height = '120px';
+            div.appendChild(video);
+        };
+        div.appendChild(playBtn);
+        allClipsList.appendChild(div);
+    });
+}
+
 function renderPreviewScroll() {
     previewScroll.innerHTML = '';
     selectedVideo.previews.forEach((p, i) => {
@@ -152,6 +185,17 @@ function selectPreview(i) {
     renderPreviewScroll();
 }
 
+// Show clips page
+async function showClipsPage() {
+    videoSelection.style.display = 'none';
+    trimmingView.style.display = 'none';
+    clipsPage.style.display = '';
+    // Fetch all clips
+    const res = await fetch('/allclips');
+    const clips = await res.json();
+    renderAllClipsList(clips);
+}
+
 // Event Handlers
 confirmTrimBtn.onclick = async function() {
     if (trimStart !== null && trimEnd !== null) {
@@ -194,6 +238,12 @@ backBtn.onclick = function() {
     videoSelection.style.display = '';
     trimStart = null;
     trimEnd = null;
+};
+
+goToClipsBtn.onclick = showClipsPage;
+backToHomeBtn.onclick = function() {
+    clipsPage.style.display = 'none';
+    videoSelection.style.display = '';
 };
 
 // Init

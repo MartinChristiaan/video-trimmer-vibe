@@ -28,6 +28,14 @@ def app_js():
 def style_css():
     return send_file('style.css')
 
+@app.route('/clipviewer')
+def clipviewer_page():
+    return send_file('clipviewer.html')
+
+@app.route('/clipviewer.js')
+def clipviewer_js():
+    return send_file('clipviewer.js')
+
 @app.route('/videos')
 def list_videos():
     video_files = [f for f in os.listdir(VIDEO_DIR) if f.lower().endswith(('.mp4', '.mov', '.avi'))]
@@ -68,6 +76,11 @@ def list_clips(video):
     for fname in os.listdir(CLIP_DIR):
         if fname.startswith(f'{base}_clip_') and fname.endswith('.mp4'):
             clips.append(fname)
+    return jsonify(clips)
+
+@app.route('/allclips')
+def list_all_clips():
+    clips = [fname for fname in os.listdir(CLIP_DIR) if fname.endswith('.mp4')]
     return jsonify(clips)
 
 @app.route('/clip/<filename>')

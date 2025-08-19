@@ -12,17 +12,25 @@
         <div id="video-selection" class="view">
             <h1>Choose a Video</h1>
             <div id="video-list" class="video-list"></div>
+            <button id="go-to-clips" style="margin: 16px auto; display: block;">View Exported Clips</button>
         </div>
         <!-- Video Trimming View -->
         <div id="trimming-view" class="view" style="display:none;">
             <button id="back-btn">← Back</button>
             <h2 id="video-title"></h2>
+            <button id="go-to-clips" class="beautiful-btn" style="margin-bottom:18px;">View Exported Clips</button>
             <video id="video-player" width="320" height="240" controls></video>
             <div id="preview-scroll" class="preview-scroll"></div>
             <input id="trim-name" type="text" placeholder="Enter trim name" style="width:100%;margin-bottom:12px;padding:8px;border-radius:6px;border:none;font-size:1em;">
             <button id="confirm-trim" style="display:none;">Confirm Trim</button>
             <h3>Exported Clips</h3>
             <div id="clips-list" class="clips-list"></div>
+        </div>
+        <!-- Clips Page View -->
+        <div id="clips-page" class="view" style="display:none;">
+            <button id="back-to-home">← Back to Home</button>
+            <h1>Exported Clips</h1>
+            <div id="all-clips-list" class="clips-list"></div>
         </div>
     </div>
     <script src="app.js"></script>
