@@ -7,6 +7,7 @@ const previewScroll = document.getElementById('preview-scroll');
 const confirmTrimBtn = document.getElementById('confirm-trim');
 const backBtn = document.getElementById('back-btn');
 const videoTitle = document.getElementById('video-title');
+const trimNameInput = document.getElementById('trim-name');
 
 let selectedVideo = null;
 let trimStart = null;
@@ -51,6 +52,7 @@ function openTrimmingView(idx) {
     videoPlayer.src = `/video/${selectedVideo.file}`;
     renderPreviewScroll();
     confirmTrimBtn.style.display = 'none';
+    backBtn.style.display = '';
 }
 
 function renderPreviewScroll() {
@@ -92,6 +94,7 @@ function selectPreview(i) {
 
 confirmTrimBtn.onclick = async function() {
     if (trimStart !== null && trimEnd !== null) {
+        const trimName = trimNameInput.value.trim();
         // POST trim info to backend
         const res = await fetch('/trim', {
             method: 'POST',
@@ -99,11 +102,12 @@ confirmTrimBtn.onclick = async function() {
             body: JSON.stringify({
                 video: selectedVideo.file,
                 start: selectedVideo.previews[trimStart].time,
-                end: selectedVideo.previews[trimEnd].time
+                end: selectedVideo.previews[trimEnd].time,
+                name: trimName
             })
         });
         if (res.ok) {
-            alert(`Trim confirmed for ${selectedVideo.name}:\nStart=${selectedVideo.previews[trimStart].time}s, End=${selectedVideo.previews[trimEnd].time}s`);
+            alert(`Trim confirmed for ${selectedVideo.name}:\nName: ${trimName}\nStart=${selectedVideo.previews[trimStart].time}s, End=${selectedVideo.previews[trimEnd].time}s`);
         } else {
             alert('Error saving trim!');
         }
@@ -111,6 +115,7 @@ confirmTrimBtn.onclick = async function() {
         trimStart = null;
         trimEnd = null;
         confirmTrimBtn.style.display = 'none';
+        trimNameInput.value = '';
         renderPreviewScroll();
     }
 };

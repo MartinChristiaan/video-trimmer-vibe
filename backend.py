@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, send_from_directory, request, send_file
-import os
 import glob
+import os
+
+from flask import Flask, jsonify, request, send_file, send_from_directory
 
 VIDEO_DIR = '/diskstation/personal/raw/'
 PREVIEW_DIR = '/diskstation/personal/previews/'
@@ -62,12 +63,13 @@ def save_trim():
     video = data.get('video')
     start = data.get('start')
     end = data.get('end')
+    name = data.get('name', '')
     if not video or start is None or end is None:
         return jsonify({'error': 'Missing parameters'}), 400
     base = os.path.splitext(video)[0]
     trim_file = os.path.join(TRIM_DIR, f'{base}_trims.txt')
     with open(trim_file, 'a') as f:
-        f.write(f'{start},{end}\n')
+        f.write(f'{start},{end},{name}\n')
     return jsonify({'status': 'ok'})
 
 if __name__ == '__main__':
