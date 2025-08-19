@@ -1,16 +1,20 @@
 import glob
 import os
+import subprocess
 
 from flask import Flask, jsonify, request, send_file, send_from_directory
 
-VIDEO_DIR = '/diskstation/personal/raw/'
-PREVIEW_DIR = '/diskstation/personal/previews/'
-TRIM_DIR = './trims/'
+ROOT_DIR = '/diskstation/personal/'
+VIDEO_DIR = f'{ROOT_DIR}/raw/'
+PREVIEW_DIR = f'{ROOT_DIR}/previews/'
+TRIM_DIR = f'{ROOT_DIR}/trims/'
+CLIP_DIR = f'{ROOT_DIR}./clips/'
 
 app = Flask(__name__)
 
-# Ensure trim directory exists
+# Ensure trim and clip directories exist
 os.makedirs(TRIM_DIR, exist_ok=True)
+os.makedirs(CLIP_DIR, exist_ok=True)
 
 @app.route('/')
 def index():
@@ -70,7 +74,27 @@ def save_trim():
     trim_file = os.path.join(TRIM_DIR, f'{base}_trims.txt')
     with open(trim_file, 'a') as f:
         f.write(f'{start},{end},{name}\n')
-    return jsonify({'status': 'ok'})
+    # Run ffmpeg to create the trimmed video
+    input_path = os.path.join(VIDEO_DIR, video)
+    # Sanitize name for filename
+    safe_name = name.replace(' ', '_').replace('/', '_') if name else f'{start}_{end}'
+    output_file = f'{base}_clip_{safe_name}.mp4'
+    output_path = os.path.join(CLIP_DIR, output_file)
+    duration = int(end) - int(start)
+    ffmpeg_cmd = [
+        'ffmpeg',
+        '-y',
+        '-i', input_path,
+        '-ss', str(start),
+        '-t', str(duration),
+        '-c', 'copy',
+        output_path
+    ]
+    try:
+        subprocess.run(ffmpeg_cmd, check=True)
+    except Exception as e:
+        return jsonify({'error': f'ffmpeg failed: {e}'}), 500
+    return jsonify({'status': 'ok', 'clip': output_file})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
