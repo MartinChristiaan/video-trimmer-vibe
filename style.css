@@ -1,3 +1,6 @@
+body, button, input, select, textarea, .view, .video-list, .video-row, .preview-images, .preview-img, .clip-item, .beautiful-btn, h1, h2, h3, span, label {
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif !important;
+}
 body {
     min-height: 100vh;
     margin: 0;
