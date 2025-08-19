@@ -1,0 +1,95 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+    color: #fff;
+}
+#app {
+    max-width: 400px;
+    margin: 40px auto;
+    background: rgba(255,255,255,0.08);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 24px;
+}
+.view h1, .view h2 {
+    text-align: center;
+    margin-bottom: 18px;
+}
+.video-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.video-row {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(67,206,162,0.08);
+}
+.video-row:hover {
+    box-shadow: 0 4px 16px rgba(67,206,162,0.18);
+}
+.preview-images {
+    display: flex;
+    gap: 8px;
+    margin-left: 12px;
+}
+.preview-img {
+    width: 64px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    opacity: 0.8;
+    transition: border 0.2s, opacity 0.2s;
+}
+.preview-img.selected {
+    border: 2px solid #43cea2;
+    opacity: 1;
+}
+.preview-img.in-trim {
+    border: 2px solid #43cea2;
+    opacity: 1;
+}
+.preview-img.out-trim {
+    opacity: 0.4;
+}
+.preview-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin: 18px 0;
+    padding-bottom: 8px;
+}
+#confirm-trim {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 12px;
+    box-shadow: 0 2px 8px rgba(24,90,157,0.18);
+    transition: background 0.2s;
+}
+#confirm-trim:hover {
+    background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+}
+#back-btn {
+    background: none;
+    border: none;
+    color: #43cea2;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
