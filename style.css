@@ -9,6 +9,9 @@ body {
     color: #fff;
 }
 #app {
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
     max-width: 1920px;
     margin: 40px auto;
     background: rgba(255,255,255,0.08);
@@ -201,7 +204,7 @@ body::-webkit-scrollbar-thumb:hover {
     margin-top: 4px;
     padding-bottom: 8px;
     align-items: start;
-    max-height: 80vh;
+    max-height: 40vh;
     overflow-y: auto;
 }
 #all-clips-list {
@@ -262,4 +265,16 @@ body::-webkit-scrollbar-thumb:hover {
     border-radius: 10px;
     margin: 8px 0;
     box-shadow: 0 4px 24px rgba(67,206,162,0.18);
+}
+#player-row {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 340px;
+    margin-bottom: 0;
+}
+#mosaic-row {
+    flex: 1;
+    margin-top: 0;
 }
