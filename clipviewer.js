@@ -33,8 +33,8 @@ function renderAllClipsList(clips) {
                 video.src = `/clip/${clip}`;
                 video.controls = true;
                 video.autoplay = true;
-                video.style.width = '480px';
-                video.style.height = '320px';
+                video.style.width = '100%';
+                video.style.height = '100%';
                 video.style.borderRadius = '10px';
                 video.style.boxShadow = '0 4px 24px rgba(67,206,162,0.18)';
                 playerArea.appendChild(video);
@@ -51,9 +51,9 @@ function renderAllClipsList(clips) {
             div.appendChild(img);
         }
         // Clip filename label
-        const label = document.createElement('span');
-        label.textContent = clip;
-        div.appendChild(label);
+        // const label = document.createElement('span');
+        // label.textContent = clip;
+        // div.appendChild(label);
         allClipsList.appendChild(div);
     });
 }

@@ -196,11 +196,30 @@ body::-webkit-scrollbar-thumb:hover {
 
 #all-clips-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 12px;
     margin-top: 4px;
     padding-bottom: 8px;
     align-items: start;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+#all-clips-list {
+    scrollbar-width: thin;
+    scrollbar-color: #43cea2 #185a9d;
+}
+#all-clips-list::-webkit-scrollbar {
+    width: 12px;
+    background: #185a9d;
+    border-radius: 8px;
+}
+#all-clips-list::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+    border-radius: 8px;
+    border: 2px solid #43cea2;
+}
+#all-clips-list::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #185a9d 0%, #43cea2 100%);
 }
 .clip-item.mosaic-item {
     background: rgba(255,255,255,0.10);
@@ -213,7 +232,7 @@ body::-webkit-scrollbar-thumb:hover {
     align-items: center;
     transition: box-shadow 0.2s, border 0.2s;
     border: 2px solid transparent;
-    min-height: 120px;
+    min-height: 140px;
     position: relative;
     margin: 0;
 }
@@ -223,11 +242,11 @@ body::-webkit-scrollbar-thumb:hover {
     z-index: 2;
 }
 .clip-thumb {
-    width: 120px;
-    height: 80px;
+    width: 180px;
+    height: 120px;
     object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 4px;
+    border-radius: 8px;
+    margin-bottom: 6px;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(24,90,157,0.12);
     transition: box-shadow 0.2s, border 0.2s;
