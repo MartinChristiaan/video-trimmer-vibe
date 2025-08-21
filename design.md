@@ -8,4 +8,13 @@ Preview images for which the timestamp is not included in a trim, the opacity sh
 
 When the trim is confirmed, the video as well as the start and stop positions are stored in a text file by the server. A seperate file should be used for each videos to store clips/trims.
 
+
+
+
+
+
 For now, generate a frontend for this which is styled beautifully, with a blue green gradient in the background.
+
+
+I would like every clip to have a thumbnail so that we can show the user a preview in the clip selection. Edit the backend, so that for all the clips it checks if there is a thumbnail, and if not it creates one.
+
