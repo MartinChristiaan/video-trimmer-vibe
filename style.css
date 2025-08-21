@@ -260,18 +260,27 @@ body::-webkit-scrollbar-thumb:hover {
     box-shadow: 0 4px 16px rgba(67,206,162,0.18);
 }
 #player-area video {
-    width: 480px !important;
-    height: 320px !important;
+    width: 960px !important;
+    height: 640px !important;
     border-radius: 10px;
     margin: 8px 0;
     box-shadow: 0 4px 24px rgba(67,206,162,0.18);
+}
+#video-player {
+    width: 960px !important;
+    height: 640px !important;
+    border-radius: 10px;
+    margin: 8px auto;
+    box-shadow: 0 4px 24px rgba(67,206,162,0.18);
+    background: #222;
+    display: block;
 }
 #player-row {
     flex: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 340px;
+    min-height: 660px;
     margin-bottom: 0;
 }
 #mosaic-row {

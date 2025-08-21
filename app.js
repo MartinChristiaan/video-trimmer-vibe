@@ -139,15 +139,18 @@ function selectPreview(i) {
     if (trimStart === null) {
         trimStart = i;
         videoPlayer.currentTime = selectedVideo.previews[i].time;
+        videoPlayer.play();
     } else if (trimEnd === null && i > trimStart) {
         trimEnd = i;
         videoPlayer.currentTime = selectedVideo.previews[i].time;
         confirmTrimBtn.style.display = '';
+        videoPlayer.play();
     } else {
         trimStart = i;
         trimEnd = null;
         videoPlayer.currentTime = selectedVideo.previews[i].time;
         confirmTrimBtn.style.display = 'none';
+        videoPlayer.play();
     }
     renderPreviewScroll();
 }

@@ -150,9 +150,9 @@ def save_trim():
         output_path
     ]
     try:
-        subprocess.run(ffmpeg_cmd, check=True)
-        # Generate thumbnail for new clip
-        ensure_clip_thumbnail(output_file)
+        subprocess.Popen(ffmpeg_cmd)
+        # Generate thumbnail for new clip (can be done after process finishes, but for now, call immediately)
+        # ensure_clip_thumbnail(output_file)  # Optionally, move thumbnail generation to a background process as well
     except Exception as e:
         return jsonify({'error': f'ffmpeg failed: {e}'}), 500
     return jsonify({'status': 'ok', 'clip': output_file})
