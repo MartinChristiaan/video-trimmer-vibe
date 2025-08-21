@@ -110,12 +110,14 @@ def save_trim():
     ffmpeg_cmd = [
         'ffmpeg',
         '-y',
+        '-ss', str(start),  # seek before input for faster processing
         '-i', input_path,
-        '-ss', str(start),
         '-t', str(duration),
         '-c', 'copy',
         output_path
     ]
+    # Run ffmpeg in the background
+    subprocess.Popen(ffmpeg_cmd)
     try:
         subprocess.run(ffmpeg_cmd, check=True)
     except Exception as e:
